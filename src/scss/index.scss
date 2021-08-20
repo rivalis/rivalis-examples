@@ -1,0 +1,9 @@
+$theme-colors: (
+  "primary": #e91e63,
+  "secondary": #009688
+);
+
+
+
+@import "~bootstrap/scss/bootstrap";
+@import "./chat_app";
