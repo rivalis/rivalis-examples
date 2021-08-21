@@ -6,7 +6,9 @@ const cors = require('cors')
 const { Node, interfaces, Exception, Logger } = require('@rivalis/core')
 const { WebSocketProtocol } = require('@rivalis/protocol-websocket')
 const ChatAppStage = require('./chat-app/ChatAppStage')
+const TicTacToeStage = require('./tic-tac-toe/TicTacToeStage')
 
+const getRandomID = () => `${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}`
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -21,6 +23,17 @@ app.post('/api/signin', (request, response) => {
     const token = uuid()
     authMap.set(token, { roomId, actorId, data })
     response.status(200).json({ token })
+})
+
+app.post('/api/room', async (request, response) => {
+    const { type = null, options = {} } = request.body
+    if (type === null) {
+        response.status(500).json({})
+        return
+    }
+    let roomId = getRandomID()
+    let room = await node.rooms.create(roomId, type, options)
+    response.status(200).json(room)
 })
 
 class CustomTokenAuth extends interfaces.AuthResolver {
@@ -48,6 +61,7 @@ const node = new Node({
 
 node.run().then(async () => {
     node.rooms.define('chat-app', new ChatAppStage())
+    node.rooms.define('tic-tac-toe', new TicTacToeStage())
 
     await node.rooms.create('chat-app', 'chat-app')
 })

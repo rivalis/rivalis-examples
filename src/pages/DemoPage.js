@@ -5,7 +5,7 @@ import { getDemo } from '../config'
 const DemoPage = () => {
 
     let id = new URLSearchParams(window.location.search).get('id')
-    let demo = getDemo(id) || <>Demo {id} doesn't exist!</>
+    let demo = getDemo(id) || <>COMING SOON! <br /></>
     return (
         <Container className={`${id} demo-container`}>
             {demo}

@@ -32,9 +32,7 @@ class ChatApp extends Component {
     onJoin = async (nickname) => {
         const response = await fetch('http://localhost:3200/api/signin', {
             method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-              },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ roomId: 'chat-app', actorId: nickname })
         })
         const { token } = await response.json()
