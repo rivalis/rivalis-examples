@@ -1,0 +1,58 @@
+{
+  "name": "@rivalis/examples",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "@rivalis/client-browser": "^2.0.1",
+    "@rivalis/core": "^2.0.5",
+    "@rivalis/protocol-websocket": "^2.0.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0-beta.5",
+    "react-chat-elements": "^10.15.0",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "uuid": "^8.3.2",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "server": "nodemon -w server --exec node server",
+    "client": "react-scripts start",
+    "build:client": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.12"
+  }
+}

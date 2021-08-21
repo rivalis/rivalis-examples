@@ -1,0 +1,21 @@
+$theme-colors: (
+  "primary": #e91e63,
+  "secondary": #009688
+);
+
+
+
+@import "~bootstrap/scss/bootstrap";
+@import "./chat_app";
+
+.btn.btn-primary {
+  color: #fff !important;
+}
+
+.btn.btn-outline-primary:hover {
+  color: #fff !important;
+}
+
+.demo-container {
+  padding: 20px 0;
+}
