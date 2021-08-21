@@ -7,3 +7,15 @@ $theme-colors: (
 
 @import "~bootstrap/scss/bootstrap";
 @import "./chat_app";
+
+.btn.btn-primary {
+  color: #fff !important;
+}
+
+.btn.btn-outline-primary:hover {
+  color: #fff !important;
+}
+
+.demo-container {
+  padding: 20px 0;
+}

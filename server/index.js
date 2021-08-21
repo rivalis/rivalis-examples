@@ -16,7 +16,7 @@ const authMap = new Map()
 
 app.use(json())
 app.use(cors())
-app.post('/signin', (request, response) => {
+app.post('/api/signin', (request, response) => {
     const { roomId = null, actorId = null, data = {} } = request.body
     const token = uuid()
     authMap.set(token, { roomId, actorId, data })

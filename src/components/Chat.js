@@ -7,18 +7,24 @@ import 'react-chat-elements/dist/main.css'
 
 
 const input = React.createRef() 
+const messagesDiv = React.createRef()
 
 const Chat = ({ title = "[YOUR CHAT TITLE]", messages = [], onSend }) => {
+
+    setTimeout(() => {
+        messagesDiv.current.scrollTop = messagesDiv.current.scrollHeight
+    }, 1)
+
     return (
         <div className="chat">
             <h2>{title}</h2>
-            <div className="messages">
+            <div className="messages" ref={messagesDiv}>
                 {messages.map((message, index) => (
                     <ChatItem key={index}
-                    avatar={`https://avatars.githubusercontent.com/my%20name`}
-                    title={message.sender}
-                    subtitle={message.data}
-                    date={new Date(message.date)}
+                        avatar="/person.png"
+                        title={message.sender}
+                        subtitle={message.data}
+                        date={new Date(message.date)}
                     />
                 ))}
             </div>
@@ -26,8 +32,23 @@ const Chat = ({ title = "[YOUR CHAT TITLE]", messages = [], onSend }) => {
             <Input
                 ref={input}
                 placeholder="Type here..."
-                multiline={true}
-                rightButtons={<Button onClick={() => onSend(input.current.input.value)} color="light" variant="outline-primary">Send</Button>}
+                multiline={false}
+                onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                        let value = input.current.input.value
+                        if (value !== '') {
+                            input.current.input.value = ''
+                            onSend(value)
+                        }
+                    }
+                }}
+                rightButtons={<Button onClick={() => {
+                    let value = input.current.input.value
+                    if (value !== '') {
+                        input.current.input.value = ''
+                        onSend(value)
+                    }
+                }} color="light" variant="outline-primary">Send</Button>}
             />
             </div>
         </div>

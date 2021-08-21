@@ -6,7 +6,7 @@ const demos = [
     {
         id: 'chat-app',
         title: 'Chat App',
-        description: 'Chat application',
+        description: 'Simple chat application',
         features: ['sending messages']
     }
 ]

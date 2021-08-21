@@ -25,6 +25,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "server": "nodemon -w server --exec node server",
     "client": "react-scripts start",
     "build:client": "react-scripts build",
     "test": "react-scripts test",
@@ -49,6 +51,8 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^6.0.1"
+    "concurrently": "^6.2.1",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.12"
   }
 }
