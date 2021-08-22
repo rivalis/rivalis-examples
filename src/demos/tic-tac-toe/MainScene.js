@@ -1,4 +1,4 @@
-import { WebSocketClient } from '@rivalis/client-browser'
+// import { WebSocketClient } from '@rivalis/client-browser'
 import { Scene } from 'phaser'
 
 class MainScene extends Scene {

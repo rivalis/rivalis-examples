@@ -1,6 +1,6 @@
 import React from 'react'
 import ChatApp from './demos/ChatApp'
-import TicTacToe from './demos/TicTacToe'
+// import TicTacToe from './demos/TicTacToe'
 
 const map = new Map()
 const demos = [
