@@ -3,8 +3,9 @@ import { WebSocketClient } from '@rivalis/client-browser'
 import MatchMaker from '../components/MatchMaker'
 import { v4 as uuid } from 'uuid'
 import Game from './tic-tac-toe/Game'
+import fetch from '../utils/fetch'
 
-class TicTacToeGame extends Component {
+class TicTacToe extends Component {
 
     /** @type {WebSocketClient} */
     client = null
@@ -20,8 +21,7 @@ class TicTacToeGame extends Component {
         if (this.client !== null) {
             this.client.disconnect()
         }
-        this.client = new WebSocketClient({ baseURL: 'ws://localhost:3200' })
-        // this.game = new Game(this.client)
+        this.client = new WebSocketClient({ baseURL: process.env['REACT_APP_WS_URL'] })
     }
 
     componentWillUnmount() {
@@ -36,22 +36,14 @@ class TicTacToeGame extends Component {
     }
 
     onCreate = async () => {
-        const response = await fetch('http://localhost:3200/api/room', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'tic-tac-toe' })
-        })
-        const { id } = await response.json()
+        const { data: response } = await fetch.post('/api/rooms', { type: 'tic-tac-toe' })
+        const { id } = await response
         this.onJoin(id)
     }
 
     onJoin = async (roomId) => {
-        const response = await fetch('http://localhost:3200/api/signin', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ roomId: roomId, actorId: uuid() })
-        })
-        const { token } = await response.json()
+        const { data: response } = await fetch.post('/api/signin', { roomId: roomId, actorId: uuid() })
+        const { token } = response
         this.client.connect(token)
         this.client.on('connect', () => this.setState({ connected: true }, () => {
             this.game = new Game(this.client)
@@ -60,15 +52,8 @@ class TicTacToeGame extends Component {
             if (this.game !== null) {
                 this.game.destroy(true, false)
             }
-        }))
-
-        
+        }))   
     }
-
-    onStart() {
-        
-    }
-
     
     render() {
         return this.state.connected ? (<div id="game"></div>) : (<MatchMaker onJoin={this.onJoin} onCreate={this.onCreate} />)
@@ -76,4 +61,4 @@ class TicTacToeGame extends Component {
 
 }
 
-export default TicTacToeGame
+export default TicTacToe

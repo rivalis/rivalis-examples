@@ -8,7 +8,6 @@ lobbyActions.handle('ping', async (actor, key, data, context) => {
     if (actors.length === 2) {
         context.broadcast(context, this.rename(key, 'start'))
     }
-
 })
 
 module.exports = lobbyActions

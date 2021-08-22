@@ -1,6 +1,6 @@
 import React from 'react'
 import ChatApp from './demos/ChatApp'
-import TicTacToeGame from './demos/TicTacToeGame'
+import TicTacToe from './demos/TicTacToe'
 
 const map = new Map()
 const demos = [
@@ -20,7 +20,7 @@ const demos = [
 
 
 map.set('chat-app', <ChatApp />)
-// map.set('tic-tac-toe-game', <TicTacToeGame />)
+// map.set('tic-tac-toe-game', <TicTacToe />)
 
 
 const getDemo = (id) => map.get(id)

@@ -31,7 +31,7 @@ class TicTacToeStage extends Stage {
         const counter = context.data.getCounter('players')
         const playerNo = await counter.decrement()
         if (playerNo === 0) {
-            context.logger.info('destroy the room', context.id)
+            context.logger.info('room is empty!')
         }
     }
 

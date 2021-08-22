@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Chat from '../components/Chat'
 import JoinWithName from '../components/JoinWithName'
 import { WebSocketClient } from '@rivalis/client-browser'
+import fetch from '../utils/fetch'
 
 
 class ChatApp extends Component {
@@ -19,7 +20,7 @@ class ChatApp extends Component {
         if (this.client !== null) {
             this.client.disconnect()
         }
-        this.client = new WebSocketClient({ baseURL: 'ws://localhost:3200' })
+        this.client = new WebSocketClient({ baseURL: process.env['REACT_APP_WS_URL'] })
     }
 
     componentWillUnmount() {
@@ -30,12 +31,8 @@ class ChatApp extends Component {
     }
 
     onJoin = async (nickname) => {
-        const response = await fetch('http://localhost:3200/api/signin', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ roomId: 'chat-app', actorId: nickname })
-        })
-        const { token } = await response.json()
+        const { data: response } = await fetch.post('/api/signin', { roomId: 'chat-app', actorId: nickname })
+        const { token } = response
         this.client.connect(token)
         this.client.on('connect', () => this.setState({ signed: true, nickname }))
         this.client.on('event:chat.message', event => {
