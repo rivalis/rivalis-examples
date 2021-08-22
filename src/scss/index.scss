@@ -18,4 +18,9 @@ $theme-colors: (
 
 .demo-container {
   padding: 20px 0;
+
+  canvas {
+    display: block;
+    margin: auto;
+  }
 }

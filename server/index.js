@@ -1,12 +1,15 @@
 const http = require('http')
+const path = require('path')
 const { v4: uuid } = require('uuid')
 const express = require('express')
 const { json } = require('body-parser')
 const cors = require('cors')
 const { Node, interfaces, Exception, Logger } = require('@rivalis/core')
 const { WebSocketProtocol } = require('@rivalis/protocol-websocket')
-const ChatAppStage = require('./chat-app/ChatAppStage')
+const ChatStage = require('./chat-app/ChatStage')
+const TicTacToeStage = require('./tic-tac-toe/TicTacToeStage')
 
+const getRandomID = () => `${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}`
 
 const app = express()
 const httpServer = http.createServer(app)
@@ -21,6 +24,21 @@ app.post('/api/signin', (request, response) => {
     const token = uuid()
     authMap.set(token, { roomId, actorId, data })
     response.status(200).json({ token })
+})
+
+app.post('/api/rooms', async (request, response) => {
+    const { type = null, options = {} } = request.body
+    if (type === null) {
+        response.status(500).json({})
+        return
+    }
+    let roomId = getRandomID()
+    let room = await node.rooms.create(roomId, type, options)
+    response.status(200).json(room)
+})
+app.use(express.static(path.join(__dirname, '../build')))
+app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, '../build/index.html'))
 })
 
 class CustomTokenAuth extends interfaces.AuthResolver {
@@ -47,7 +65,8 @@ const node = new Node({
 })
 
 node.run().then(async () => {
-    node.rooms.define('chat-app', new ChatAppStage())
+    node.rooms.define('chat-app', new ChatStage())
+    node.rooms.define('tic-tac-toe', new TicTacToeStage())
 
     await node.rooms.create('chat-app', 'chat-app')
 })

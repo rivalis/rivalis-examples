@@ -15,7 +15,7 @@ for (let [index, demo] of demos.entries()) {
 const HomePage = () => (
     <Container>
         {grid.map((row, index) => (<Row key={index}>{row.map((demo, index) => (
-            <Col key={index}>
+            <Col md={3} key={index}>
                 <DemoCard 
                     key={demo.id}
                     title={demo.title}

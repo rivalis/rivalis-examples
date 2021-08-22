@@ -1,7 +1,7 @@
 const { Stage } = require('@rivalis/core')
 const chatActions = require('./chatActions')
 
-class ChatAppStage extends Stage {
+class ChatStage extends Stage {
 
     onCreate() {
         this.use('chat', chatActions)
@@ -9,4 +9,4 @@ class ChatAppStage extends Stage {
 
 }
 
-module.exports = ChatAppStage
+module.exports = ChatStage
