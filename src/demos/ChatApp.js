@@ -55,6 +55,9 @@ class ChatApp extends Component {
     append(sender, data) {
         let oldList = [ ...this.state.messages ]
         oldList.push({ sender: sender, data: data, date: new Date().getTime() })
+        if (oldList.length > 50) {
+            oldList.shift()
+        }
         this.setState({ messages: oldList })
     }
 
