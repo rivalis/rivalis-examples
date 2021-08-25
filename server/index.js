@@ -4,7 +4,7 @@ const { v4: uuid } = require('uuid')
 const express = require('express')
 const { json } = require('body-parser')
 const cors = require('cors')
-const { Node, interfaces, Exception, Logger } = require('@rivalis/core')
+const { Node, interfaces, Exception, Logger, Plugin, structs } = require('@rivalis/core')
 const { WebSocketProtocol } = require('@rivalis/protocol-websocket')
 const ChatStage = require('./chat-app/ChatStage')
 const TicTacToeStage = require('./tic-tac-toe/TicTacToeStage')
@@ -41,6 +41,7 @@ app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, '../build/index.html'))
 })
 
+
 class CustomTokenAuth extends interfaces.AuthResolver {
     /**
      * 
@@ -61,16 +62,17 @@ class CustomTokenAuth extends interfaces.AuthResolver {
 const node = new Node({
     auth: new CustomTokenAuth(),
     transports: [ websocket ],
-    loggerLevel: Logger.LEVEL.TRACE
+    loggerLevel: Logger.LEVEL.INFO
 })
 
 node.run().then(async () => {
     node.rooms.define('chat-app', new ChatStage())
     node.rooms.define('tic-tac-toe', new TicTacToeStage())
-
     await node.rooms.create('chat-app', 'chat-app')
 })
 
 httpServer.listen(3200, () => {
     console.log('[HTTP SERVER] listen on port 3200')
 })
+
+

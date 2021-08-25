@@ -7,7 +7,7 @@ chatActions.handle('message', async (actor, key, data, context) => {
 })
 
 chatActions.filter('message', (actor, event, context) => {
-    return actor.id === event.sender
+    return actor.id !== event.sender
 })
 
 module.exports = chatActions
